@@ -17,10 +17,21 @@ function pull {
     echo $release
 }
 
+
 function install {
-    pull $@ --dest=/tmp
+    appropts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\1/g"`
+    helmopts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\3/g"`
+    pull $appropts --dest=/tmp
     sleep 1
-    helm install $release
+    helm install $helmopts $release
+}
+
+function upgrade {
+    appropts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\1/g"`
+    helmopts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\3/g"`
+    pull $appropts --dest=/tmp
+    sleep 1
+    helm upgrade  $helmopts $release
 }
 
 function cnr_helm {
@@ -34,6 +45,9 @@ case "$1" in
         ;;
     install)
         install "${@:2}"
+        ;;
+    upgrade)
+        upgrade "${@:2}"
         ;;
     pull)
         pull "${@:2}"
