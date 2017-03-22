@@ -1,6 +1,6 @@
 CLI_V = v0.3.7-dev
 
-PLUGIN_FILES = plugin.yaml LICENSE cnr.sh
+PLUGIN_FILES = plugin.yaml LICENSE cnr.sh README.md
 
 dist/%:
 	mkdir -p $@/registry
