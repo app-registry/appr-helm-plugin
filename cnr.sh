@@ -19,19 +19,11 @@ function pull {
 
 
 function install {
-    appropts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\1/g"`
-    helmopts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\3/g"`
-    pull $appropts --dest=/tmp
-    sleep 1
-    helm install $helmopts $release
+    $HELM_PLUGIN_DIR/cnr helm install $@
 }
 
 function upgrade {
-    appropts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\1/g"`
-    helmopts=`echo "$@" | sed -r "s/(.*)( +-- +)(.+)/\3/g"`
-    pull $appropts --dest=/tmp
-    sleep 1
-    helm upgrade  $helmopts $release
+    $HELM_PLUGIN_DIR/cnr helm upgrade $@
 }
 
 function cnr_helm {
