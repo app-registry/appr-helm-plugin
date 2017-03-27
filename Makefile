@@ -15,6 +15,14 @@ all: osx linux
 osx: dist/osx
 linux: dist/linux
 
+install-linux: dist/linux
+	cp dist/registry-helm-plugin-$(CLI_V)-linux-x64.tar.gz ~/.helm/plugins
+	cd ~/.helm/plugins && tar xvf registry-helm-plugin-$(CLI_V)-linux-x64.tar.gz
+
+install-osx: dist/linux
+	cp dist/registry-helm-plugin-$(CLI_V)-osx-x64.tar.gz ~/.helm/plugins
+	cd ~/.helm/plugins && tar xvf registry-helm-plugin-$(CLI_V)-osx-x64.tar.gz
+
 clean:
 	rm -rf dist
 

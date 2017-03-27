@@ -13,10 +13,9 @@ function update_cnr {
 
 function pull {
     #echo "pull $@"
-    release=`$HELM_PLUGIN_DIR/cnr pull --media-type helm --tarball ${@} |tail -n1`
+    release=`$HELM_PLUGIN_DIR/cnr pull --media-type helm ${@} |tail -n1`
     echo $release
 }
-
 
 function install {
     $HELM_PLUGIN_DIR/cnr helm install $@
