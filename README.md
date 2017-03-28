@@ -28,7 +28,7 @@ tar xzvf registry-helm-plugin-v0.3.7-dev-linux-x64.tar.gz -C ~/.helm/plugins/
 
 
 ```
-helm registry version app.quay.io
+helm registry version quay.io
 ```
 
 Output should be:
@@ -41,13 +41,13 @@ Client-version: 0.X.Y
 
 ```
 helm init
-helm registry list app.quay.io
-helm registry install app.quay.io/helm/jenkins
+helm registry list quay.io
+helm registry install quay.io/helm/jenkins
 ```
 
 ## Create and Push Your Own Chart
 
-First, create an account on https://app.quay.io (staging server) and login to the CLI using the username and password
+First, create an account on https://quay.io and login to the CLI using the username and password
 
 Set an environment for the username created at Quay to use through the rest of these instructions.
 
@@ -58,7 +58,7 @@ export USERNAME=philips
 Login to Quay with the Helm registry plugin:
 
 ```
-helm registry login -u $USERNAME app.quay.io
+helm registry login -u $USERNAME quay.io
 ```
 
 Create a new Helm chart, the default will create a sample nginx application:
@@ -71,6 +71,6 @@ Push this new chart to Quay and then deploy it from Quay.
 
 ```
 cd nginx
-helm registry push --namespace $USERNAME app.quay.io
-helm registry install app.quay.io/$USERNAME/nginx
+helm registry push --namespace $USERNAME quay.io
+helm registry install quay.io/$USERNAME/nginx
 ```
