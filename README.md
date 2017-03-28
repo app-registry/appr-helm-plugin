@@ -71,6 +71,6 @@ Push this new chart to Quay and then deploy it from Quay.
 
 ```
 cd nginx
-helm registry push --namespace $USERNAME app.quay.io
+helm registry push --namespace $USERNAME quay.io
 helm registry install app.quay.io/$USERNAME/nginx
 ```
