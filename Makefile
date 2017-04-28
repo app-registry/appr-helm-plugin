@@ -1,4 +1,4 @@
-CLI_V = v0.3.8-dev
+CLI_V = v0.3.8
 
 PLUGIN_FILES = plugin.yaml LICENSE cnr.sh README.md
 
