@@ -1,6 +1,6 @@
 name: "registry"
 version: "0.3.8"
-usage: "Integreate CNR client to HELM"
+usage: "Integrate CNR client to HELM"
 description: |-
   This plugin provides CNR client to Helm.
 ignoreFlags: false
