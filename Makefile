@@ -1,6 +1,6 @@
-CLI_V = v0.3.8
+CLI_V = v0.4.0
 
-PLUGIN_FILES = plugin.yaml LICENSE cnr.sh README.md
+PLUGIN_FILES = plugin.yaml LICENSE cnr.sh README.md Changelog.md
 
 dist/%:
 	mkdir -p $@/registry
@@ -27,3 +27,6 @@ clean:
 	rm -rf dist
 
 .PHONY: clean
+
+dev:
+	cp $(PLUGIN_FILES) ~/.helm/plugins/registry

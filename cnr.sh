@@ -21,6 +21,10 @@ function install {
     $HELM_PLUGIN_DIR/cnr helm install $@
 }
 
+function dep {
+    $HELM_PLUGIN_DIR/cnr helm dep $@
+}
+
 function upgrade {
     $HELM_PLUGIN_DIR/cnr helm upgrade $@
 }
@@ -39,6 +43,9 @@ case "$1" in
         ;;
     upgrade)
         upgrade "${@:2}"
+        ;;
+    dep)
+        dep "${@:2}"
         ;;
     pull)
         pull "${@:2}"
