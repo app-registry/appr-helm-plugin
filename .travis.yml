@@ -1,6 +1,7 @@
 env:
   - MAKECMD=linux
   - MAKECMD=osx
+  - MAKECMD=win
 
 script:
   - make $MAKECMD
