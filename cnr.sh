@@ -5,6 +5,13 @@ LATEST="v0.4.0"
 
 function download_or_noop {
   if [ ! -e "$HELM_PLUGIN_DIR/cnr" ]; then
+    read -p "Some registry plugin assets do not exist, download them now? [Y/n] " -n 1 -r
+    echo # print a new line
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      printf "Exiting without downloading assets."
+      return
+    fi
+
     local PLATFORM="linux"
     if [ "$(uname)" = "Darwin" ]; then
       PLATFORM="osx"
