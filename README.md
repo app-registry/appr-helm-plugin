@@ -8,20 +8,37 @@ If you are an OSX user, quickstart with brew: `brew install kubernetes-helm`
 
 Next download and install the registry plugin for Helm.
 
-### OSX
+### Install
 
-```
-wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-osx-x64.tar.gz
-mkdir -p ~/.helm/plugins/
-tar xzvf registry-helm-plugin-v0.4.0-osx-x64.tar.gz -C ~/.helm/plugins/
+``` shell
+$ mkdir -p ~/.helm/plugins/
+$ cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry
+
+# On first use it downloads required assets
+
+$ helm registry --help
+Registry plugin assets do not exist, download them now !
+downloading https://github.com/app-registry/appr-cli/releases/download/v0.4.1/cnr-linux-x64 ...
 ```
 
-### Linux
 
+### Upgrade
+
+##### Upgrade the appr binary
+
+``` shell
+$ helm registry list-plugin-versions
+$ helm registry upgrade-plugin VERSION
+downloading https://github.com/app-registry/appr-cli/releases/download/v0.4.1/cnr-linux-x64 ...
 ```
-wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-linux-x64.tar.gz
-mkdir -p ~/.helm/plugins/
-tar xzvf registry-helm-plugin-v0.4.0-linux-x64.tar.gz -C ~/.helm/plugins/
+
+##### Upgrade the helm plugin
+
+``` shell
+$ cd ~/.helm/plugins/registry
+$ git pull origin master
+$ helm registry upgrade-plugin
+downloading https://github.com/app-registry/appr-cli/releases/download/v0.4.1/cnr-linux-x64 ...
 ```
 
 ## Deploy Jenkins Using Helm from the Quay Registry

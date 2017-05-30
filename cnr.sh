@@ -14,7 +14,6 @@ function download_cnr {
     if [ $# -eq 1 ]; then
       version=$1
     fi
-    echo "downloading $HELM_PLUGIN_DIR/cnr $version"
     local PLATFORM="linux"
 
     if [ "$(uname)" = "Darwin" ]; then
@@ -22,11 +21,11 @@ function download_cnr {
     fi
 
     local URL="https://github.com/app-registry/appr-cli/releases/download/$version/cnr-$PLATFORM-x64"
-    echo $URL
+    echo "downloading $URL ..."
     if which curl > /dev/null; then
-      curl -L $URL -o $HELM_PLUGIN_DIR/cnr
+      curl -s -L $URL -o $HELM_PLUGIN_DIR/cnr
     else
-      wget -O $HELM_PLUGIN_DIR/cnr $URL
+      wget -q -O $HELM_PLUGIN_DIR/cnr $URL
     fi
     chmod +x "$HELM_PLUGIN_DIR/cnr"
 }
