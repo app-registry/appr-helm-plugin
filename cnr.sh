@@ -1,33 +1,40 @@
 #!/bin/bash
 #set -e
 
-LATEST="v0.4.0"
+function list_plugin_versions {
+    curl -s https://api.github.com/repos/app-registry/appr-cli/tags |grep name | cut -d'"' -f 4
+};
 
-function download_or_noop {
-  if [ ! -e "$HELM_PLUGIN_DIR/cnr" ]; then
-    read -p "Some registry plugin assets do not exist, download them now? [Y/n] " -n 1 -r
-    echo # print a new line
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-      printf "Exiting without downloading assets."
-      return
+function latest {
+    list_plugin_versions | head -n 1
+}
+
+function download_cnr {
+    local version=$(latest)
+    if [ $# -eq 1 ]; then
+      version=$1
     fi
-
+    echo "downloading $HELM_PLUGIN_DIR/cnr $version"
     local PLATFORM="linux"
+
     if [ "$(uname)" = "Darwin" ]; then
       PLATFORM="osx"
     fi
 
-    local URL="https://github.com/app-registry/helm-plugin/releases/download/$LATEST/registry-helm-plugin-$LATEST-$PLATFORM-x64.tar.gz"
-
+    local URL="https://github.com/app-registry/appr-cli/releases/download/$version/cnr-$PLATFORM-x64"
+    echo $URL
     if which curl > /dev/null; then
-      curl -s -L $URL | tar xf - registry/cnr
+      curl -L $URL -o $HELM_PLUGIN_DIR/cnr
     else
-      wget -q -O - $URL | tar xf - registry/cnr
+      wget -O $HELM_PLUGIN_DIR/cnr $URL
     fi
-
-    mv registry/cnr "$HELM_PLUGIN_DIR/cnr"
-    rm -rf registry
     chmod +x "$HELM_PLUGIN_DIR/cnr"
+}
+
+function download_or_noop {
+  if [ ! -e "$HELM_PLUGIN_DIR/cnr" ]; then
+    echo "Registry plugin assets do not exist, download them now !"
+    download_cnr $1
   fi
 }
 
@@ -53,11 +60,16 @@ function cnr_helm {
   $HELM_PLUGIN_DIR/cnr $@ --media-type=helm
 }
 
+[ -z "$HELM_PLUGIN_DIR" ] && HELM_PLUGIN_DIR="$HOME/.helm/plugins/registry"
+LATEST=$(latest)
+download_or_noop $LATEST
 
-download_or_noop
 case "$1" in
-  init-plugin)
-    update_cnr
+  upgrade-plugin)
+    download_cnr "${@:2}"
+    ;;
+  list-plugin-versions)
+    list_plugin_versions
     ;;
   install)
     install "${@:2}"
