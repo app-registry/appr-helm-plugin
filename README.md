@@ -11,17 +11,17 @@ Next download and install the registry plugin for Helm.
 ### OSX
 
 ```
-wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-dev-osx-x64.tar.gz
+wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-osx-x64.tar.gz
 mkdir -p ~/.helm/plugins/
-tar xzvf registry-helm-plugin-v0.4.0-dev-osx-x64.tar.gz -C ~/.helm/plugins/
+tar xzvf registry-helm-plugin-v0.4.0-osx-x64.tar.gz -C ~/.helm/plugins/
 ```
 
 ### Linux
 
 ```
-wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-dev-linux-x64.tar.gz
+wget https://github.com/app-registry/helm-plugin/releases/download/v0.4.0/registry-helm-plugin-v0.4.0-linux-x64.tar.gz
 mkdir -p ~/.helm/plugins/
-tar xzvf registry-helm-plugin-v0.4.0-dev-linux-x64.tar.gz -C ~/.helm/plugins/
+tar xzvf registry-helm-plugin-v0.4.0-linux-x64.tar.gz -C ~/.helm/plugins/
 ```
 
 ## Deploy Jenkins Using Helm from the Quay Registry
