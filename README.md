@@ -59,7 +59,7 @@ Client-version: 0.X.Y
 ```
 helm init
 helm registry list quay.io
-helm registry install quay.io/helm/jenkins
+helm registry install quay.io/charts/jenkins
 ```
 
 ## Create and Push Your Own Chart
