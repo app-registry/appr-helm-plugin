@@ -1,5 +1,5 @@
 name: "registry"
-version: "0.4.1"
+version: "0.5.1"
 usage: "Integrate app-registry client to HELM"
 description: |-
   This plugin provides app-registry client to Helm.

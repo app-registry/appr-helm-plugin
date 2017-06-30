@@ -1,3 +1,9 @@
+## 0.5.1 Released on 2017-05-24
+
+    - Use the new `appr` binary
+    - new command to run a registry server
+      ```helm registry run-server```
+
 ## 0.4.1 Released on 2017-05-24
 
     - Download/upgrade the cnr binary from the plugin
