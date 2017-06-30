@@ -2,14 +2,14 @@
 #set -e
 
 function list_plugin_versions {
-    curl -s https://api.github.com/repos/app-registry/appr-cli/tags |grep name | cut -d'"' -f 4
+    curl -s https://api.github.com/repos/app-registry/appr/tags |grep name | cut -d'"' -f 4
 };
 
 function latest {
     list_plugin_versions | head -n 1
 }
 
-function download_cnr {
+function download_appr {
     local version=$(latest)
     if [ $# -eq 1 ]; then
       version=$1
@@ -20,43 +20,43 @@ function download_cnr {
       PLATFORM="osx"
     fi
 
-    local URL="https://github.com/app-registry/appr-cli/releases/download/$version/cnr-$PLATFORM-x64"
+    local URL="https://github.com/app-registry/appr/releases/download/$version/appr-$PLATFORM-x64"
     echo "downloading $URL ..."
     if which curl > /dev/null; then
-      curl -s -L $URL -o $HELM_PLUGIN_DIR/cnr
+      curl -s -L $URL -o $HELM_PLUGIN_DIR/appr
     else
-      wget -q -O $HELM_PLUGIN_DIR/cnr $URL
+      wget -q -O $HELM_PLUGIN_DIR/appr $URL
     fi
-    chmod +x "$HELM_PLUGIN_DIR/cnr"
+    chmod +x "$HELM_PLUGIN_DIR/appr"
 }
 
 function download_or_noop {
-  if [ ! -e "$HELM_PLUGIN_DIR/cnr" ]; then
+  if [ ! -e "$HELM_PLUGIN_DIR/appr" ]; then
     echo "Registry plugin assets do not exist, download them now !"
-    download_cnr $1
+    download_appr $1
   fi
 }
 
 function pull {
   #echo "pull $@"
-  release=$($HELM_PLUGIN_DIR/cnr pull --media-type helm ${@} | tail -n1)
+  release=$($HELM_PLUGIN_DIR/appr pull --media-type helm ${@} | tail -n1)
   echo "$release"
 }
 
 function install {
-  $HELM_PLUGIN_DIR/cnr helm install $@
+  $HELM_PLUGIN_DIR/appr helm install $@
 }
 
 function dep {
-  $HELM_PLUGIN_DIR/cnr helm dep $@
+  $HELM_PLUGIN_DIR/appr helm dep $@
 }
 
 function upgrade {
-  $HELM_PLUGIN_DIR/cnr helm upgrade $@
+  $HELM_PLUGIN_DIR/appr helm upgrade $@
 }
 
-function cnr_helm {
-  $HELM_PLUGIN_DIR/cnr $@ --media-type=helm
+function appr_helm {
+  $HELM_PLUGIN_DIR/appr $@ --media-type=helm
 }
 
 [ -z "$HELM_PLUGIN_DIR" ] && HELM_PLUGIN_DIR="$HOME/.helm/plugins/registry"
@@ -65,7 +65,7 @@ download_or_noop $LATEST
 
 case "$1" in
   upgrade-plugin)
-    download_cnr "${@:2}"
+    download_appr "${@:2}"
     ;;
   list-plugin-versions)
     list_plugin_versions
@@ -83,21 +83,21 @@ case "$1" in
     pull "${@:2}"
     ;;
   push)
-    cnr_helm "$@"
+    appr_helm "$@"
     ;;
   list)
-    cnr_helm "$@"
+    appr_helm "$@"
     ;;
   show)
-    cnr_helm "$@"
+    appr_helm "$@"
     ;;
   delete-package)
-    cnr_helm "$@"
+    appr_helm "$@"
     ;;
   inspect)
-    cnr_helm "$@"
+    appr_helm "$@"
     ;;
   *)
-    $HELM_PLUGIN_DIR/cnr $@
+    $HELM_PLUGIN_DIR/appr $@
     ;;
 esac
