@@ -2,7 +2,12 @@
 #set -e
 
 function list_plugin_versions {
-    curl -s https://api.github.com/repos/app-registry/appr/tags |grep name | cut -d'"' -f 4
+  if [ -x "$(command -v curl)" ]; then
+    local GET="curl -s"
+  else
+    local GET="wget -q -O -"
+  fi
+  $GET https://api.github.com/repos/app-registry/appr/tags |grep name | cut -d'"' -f 4
 };
 
 function latest {
@@ -22,7 +27,7 @@ function download_appr {
 
     local URL="https://github.com/app-registry/appr/releases/download/$version/appr-$PLATFORM-x64"
     echo "downloading $URL ..."
-    if which curl > /dev/null; then
+    if [ -x "$(command -v curl)" ]; then
       curl -s -L $URL -o $HELM_PLUGIN_DIR/appr
     else
       wget -q -O $HELM_PLUGIN_DIR/appr $URL
