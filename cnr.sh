@@ -21,6 +21,10 @@ function download_appr {
     fi
     local PLATFORM="linux"
 
+    if [ -e /etc/alpine-release ]; then
+      PLATFORM="alpine"
+    fi
+
     if [ "$(uname)" = "Darwin" ]; then
       PLATFORM="osx"
     fi
