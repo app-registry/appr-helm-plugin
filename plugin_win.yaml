@@ -1,8 +1,11 @@
 name: "registry"
-version: "0.5.1"
-usage: "Integrate app-registry client to HELM"
+version: "0.7.0"
+usage: "app-registry client to Helm"
 description: |-
   This plugin provides app-registry client to Helm.
+  usage:
+    $ helm registry install quay.io/charts/gitlab-ce --namespace ci
+    $ helm registry upgrade quay.io/charts/jenkins --set imageTag=latest
 ignoreFlags: false
 useTunnel: false
 command: "powershell $HELM_PLUGIN_DIR/cnr.ps1"
