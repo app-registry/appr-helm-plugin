@@ -1,2 +1,4 @@
--> Issues should be opened on the https://github.com/app-registry/appr repo.
+Please open your issue on the [app-registry/appr](https://github.com/app-registry/appr) project.
+
+
 
