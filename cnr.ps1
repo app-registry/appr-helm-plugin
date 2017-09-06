@@ -23,12 +23,15 @@ function Latest() {
 
 function Download_Appr() {
     $version = Latest
-    if ($global_args.Count -eq 1) {
-        $version = $global_args[0]
+	# 2 global_args means e.g.: 
+	# helm registry upgrade-plugin v0.7.2
+	# then v0.7.2 is used as version, if not latest
+	if ($global_args.Count -eq 2) {
+        $version = $global_args[1]
     }
     $Params = @{}
     $Params.add('outFile', "$Env:HELM_PLUGIN_DIR/appr.exe")
-    $Params.add('uri', "https://github.com/app-registry/appr/releases/download/$version/appr-$version-win-x64.exe")
+    $Params.add('uri', "https://github.com/app-registry/appr/releases/download/$version/appr-win-x64.exe")
     if ($Env:HTTPS_PROXY) {
         $Params.add('Proxy', $Env:HTTPS_PROXY)
     }
@@ -39,14 +42,14 @@ function Download_Appr() {
 function Download_Or_Noop() {
     if (!( Test-Path $Env:HELM_PLUGIN_DIR/appr.exe)) {
         Write-Host "Registry plugin assets do not exist, download them now !"
-        Download_Appr $args[0]
+        Download_Appr
     }
 }
 
 Download_Or_Noop
 
 switch ($args[0]) {
-    "upgrade_plugin" { Download_Appr $args[1..($args.Length-1)] }
-    "list_plugin_versions" { List_Plugin_Versions }
+    "upgrade-plugin" { Download_Appr }
+    "list-plugin-versions" { List_Plugin_Versions }
     default { Invoke-Expression "$Env:HELM_PLUGIN_DIR/appr.exe helm $args"}
 }
