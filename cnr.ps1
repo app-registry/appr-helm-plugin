@@ -12,6 +12,7 @@ function List_Plugin_Versions() {
     if ($Env:HTTPS_PROXY) {
         $Params.add('Proxy', $Env:HTTPS_PROXY)
     }
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     return Invoke-WebRequest @Params | ConvertFrom-Json
 
 }
