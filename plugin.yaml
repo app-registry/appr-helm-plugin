@@ -9,3 +9,6 @@ description: |-
 ignoreFlags: false
 useTunnel: false
 command: "$HELM_PLUGIN_DIR/cnr.sh"
+hooks:
+    install: "$HELM_PLUGIN_DIR/cnr.sh install-plugin"
+    upgrade: "$HELM_PLUGIN_DIR/cnr.sh upgrade-plugin"
