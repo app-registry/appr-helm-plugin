@@ -42,15 +42,17 @@ function download_appr {
 function download_or_noop {
   if [ ! -e "$HELM_PLUGIN_DIR/appr" ]; then
     echo "Registry plugin assets do not exist, download them now !"
-    download_appr $1
+    download_appr
   fi
 }
 
 [ -z "$HELM_PLUGIN_DIR" ] && HELM_PLUGIN_DIR="$HOME/.helm/plugins/registry"
-LATEST=$(latest)
-download_or_noop $LATEST
+download_or_noop
 
 case "$1" in
+  install-plugin)
+    echo "Helm registry plugin installed!"
+    ;;
   upgrade-plugin)
     download_appr "${@:2}"
     ;;
